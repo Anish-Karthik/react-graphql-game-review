@@ -1,5 +1,13 @@
 
 import { useQuery, gql } from '@apollo/client';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from './pages/Layout';
+import NoPage from './pages/NoPage';
+import Landing from './pages/Landing';
+import Dashboard from './pages/Dashboard';
+import Game from './pages/Game';
+import MyGames from './pages/MyGames';
+import AddGame from './pages/AddGame';
 
 const GET_GAMES = gql`
   query GetGames {
@@ -17,16 +25,20 @@ function App() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  return data.games.map(({ id, name, description }: any) => (
-    <div key={id}>
-      <h3>{name}</h3>
-      <img width="200" height="250" alt="location-reference" src={"https://picsum.photos/200/250"} />
-      <br />
-      <b>About this location:</b>
-      <p>{description}</p>
-      <br />
-    </div>
-  ));
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Landing />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="games/:gameId" element={<Game />} />
+          <Route path="my-games" element={<MyGames />} />
+          <Route path="add-game" element={<AddGame />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App

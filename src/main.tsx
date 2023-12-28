@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './index.css';
 
 const client = new ApolloClient({
-  uri: 'https://game-review-server-anish.onrender.com/graphql',
+  uri: 'http://localhost:4000/graphql' || 'https://game-review-server-anish.onrender.com/graphql',
   cache: new InMemoryCache(),
 });
 
