@@ -34,6 +34,8 @@ const Onboarding = () => {
   const { userId } = useAuth();
   const user = useUser();
   const navigate = useNavigate();  
+
+  console.log(userId)
   const [createAuthor, { data, loading, error }] = useMutation(CREATE_USER);
   const { data: authorData, loading: authorQueryLoading, error: authorQueryError } = useQuery(GET_USER, {
     variables: { authorId: userId } ,
@@ -62,11 +64,12 @@ const Onboarding = () => {
   if (authorData?.author) {
     navigate('/dashboard')
   }
-  if (!user || !userId) {
+  if (user && !user.isSignedIn) {
+    console.log('no user', user, userId)
     navigate('/')
   }
   if (loading || authorQueryLoading) return <p>Loading...</p>;
-  if (error || authorQueryError) return <p>Error : {error?.message || authorQueryError?.message}</p>;
+  if (error) return <p>Error : {error?.message || authorQueryError?.message}</p>;
 
   console.log(form.getValues())
   // 2. Define a submit handler.

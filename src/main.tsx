@@ -4,8 +4,13 @@ import App from './App.tsx';
 import './index.css';
 import { ClerkProvider } from '@clerk/clerk-react'
 
+console.log(window.location.href)
+
+const SERVER_URL = window.location.href.includes('http://localhost:5173') ? 'http://localhost:4000' : 'https://game-review-server-anish.onrender.com'
+console.log(SERVER_URL+'/graphql')
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql' || 'https://game-review-server-anish.onrender.com/graphql',
+  uri: SERVER_URL+'/graphql',
   cache: new InMemoryCache(),
 });
 
