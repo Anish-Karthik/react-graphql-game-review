@@ -1,10 +1,9 @@
-"use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
 import { CREATE_GAME } from "@/lib/grapql/mutations"
 import { useMutation } from "@apollo/client"
 import { useNavigate } from "react-router-dom"
@@ -77,7 +75,7 @@ const formSchema = z.object({
 
 const AddGame = () => {
   const navigate = useNavigate();
-  const [addGame, { data, loading, error }] = useMutation(CREATE_GAME);
+  const [addGame, { loading, error }] = useMutation(CREATE_GAME);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -85,7 +83,6 @@ const AddGame = () => {
     }
   })
 
-  const { isValid } = form.formState
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await addGame({

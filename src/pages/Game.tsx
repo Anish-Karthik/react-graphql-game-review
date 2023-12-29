@@ -1,12 +1,10 @@
 import AddReview from '@/components/AddReview'
 import GameCard from '@/components/GameCard'
 import ReviewCard from '@/components/ReviewCard'
-import { Button } from '@/components/ui/button'
 import { CREATE_REVIEW } from '@/lib/grapql/mutations'
 import { GET_GAME, GET_USER } from '@/lib/grapql/queries'
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useAuth } from '@clerk/clerk-react'
-import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 
@@ -15,7 +13,7 @@ const Game = () => {
   const { userId } = useAuth();
   const params = useParams()
   const navigate = useNavigate()
-  const { data: authorData, loading: authorQueryLoading, error: authorQueryError, refetch } = useQuery(GET_USER, {
+  const { data: authorData, loading: authorQueryLoading } = useQuery(GET_USER, {
     variables: { authorId: userId } ,
   });
   const gameId = params.gameId

@@ -1,14 +1,13 @@
 import { GET_USER } from '@/lib/grapql/queries';
 import { useQuery } from '@apollo/client';
 import { useAuth } from '@clerk/clerk-react';
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
   const { userId } = useAuth();
   console.log(userId)
   const navigate = useNavigate();
-  const { data: authorData, loading: authorQueryLoading, error: authorQueryError } = useQuery(GET_USER, {
+  const { data: authorData, loading: authorQueryLoading} = useQuery(GET_USER, {
     variables: { authorId: userId } ,
   });
   if (userId && authorQueryLoading) return <p>Loading...</p>;

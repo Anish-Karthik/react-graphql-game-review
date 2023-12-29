@@ -1,6 +1,6 @@
-import { StarIcon } from 'lucide-react'
-import React, { useState } from 'react'
-import { Button } from './ui/button'
+import { DeleteIcon, EditIcon, StarIcon } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from './ui/button';
 
 const limit = 300;
 
@@ -18,9 +18,15 @@ const ReviewCard = ({
   const [show, setShow] = useState(false)
   return (
     <div className='flex w-full flex-col gap-2 border p-5 rounded-md'>
-      <div className='flex items-center gap-3'>
-        <img src={authorImage} alt={authorName} className='w-10 h-10 rounded-full' />
-        <h1 className='text-xl font-bold'>{authorName}</h1>
+      <div className='flex justify-between items-center gap-2'>
+        <div className='flex items-center gap-3'>
+          <img src={authorImage} alt={authorName} className='w-10 h-10 rounded-full' />
+          <h1 className='text-xl font-bold'>{authorName}</h1>
+        </div>
+        <div className='flex '>
+          <EditIcon />
+          <DeleteIcon />
+        </div>
       </div>
       <div className='flex flex-col gap-2'>
         <div className='flex justify-between'>

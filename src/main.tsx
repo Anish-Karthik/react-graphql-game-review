@@ -1,8 +1,8 @@
-import { ApolloClient, ApolloProvider, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ClerkProvider } from '@clerk/clerk-react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import { ClerkProvider } from '@clerk/clerk-react'
 
 console.log(window.location.href)
 

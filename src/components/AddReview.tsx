@@ -21,12 +21,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { CREATE_REVIEW } from '@/lib/grapql/mutations'
-import { useMutation } from '@apollo/client'
 
 import Stars from "@/components/ReactStars"
 import { Textarea } from './ui/textarea'
-import { GET_GAME } from "@/lib/grapql/queries"
 
 const formSchema = z.object({
   rating: z

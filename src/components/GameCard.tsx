@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils'
-import { ActivityIcon, AnnoyedIcon, StarIcon } from 'lucide-react'
-import React from 'react'
+import { ActivityIcon } from 'lucide-react'
 
 const GameCard = ({
   name,

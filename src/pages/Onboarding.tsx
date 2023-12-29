@@ -36,7 +36,7 @@ const Onboarding = () => {
   const navigate = useNavigate();  
 
   console.log(userId)
-  const [createAuthor, { data, loading, error }] = useMutation(CREATE_USER);
+  const [createAuthor, { loading, error }] = useMutation(CREATE_USER);
   const { data: authorData, loading: authorQueryLoading, error: authorQueryError } = useQuery(GET_USER, {
     variables: { authorId: userId } ,
   });

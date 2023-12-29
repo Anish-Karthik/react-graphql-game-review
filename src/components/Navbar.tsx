@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
 import { Link, useLocation } from 'react-router-dom'
-import { SignOutButton, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
 import { Button } from './ui/button'
 
 const routes = [
