@@ -1,20 +1,9 @@
 import GameCard from '@/components/GameCard';
-import { gql, useQuery } from '@apollo/client';
-import React from 'react'
+import { GET_GAMES } from '@/lib/grapql/queries';
+import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
-const GET_GAMES = gql`
-  query GetGames {
-    games {
-      id
-      name
-      description
-      price
-      platform
-      company
-    }
-  }
-`;
+
 
 const Dashboard = () => {
   const { loading, error, data } = useQuery(GET_GAMES);
@@ -28,7 +17,7 @@ const Dashboard = () => {
           <GameCard
             name={game.name}
             description={game.description}
-            image={"https://picsum.photos/700/700"}
+            image={game.image}
             price={game.price}
             platform={game.platform}
             company={game.company}

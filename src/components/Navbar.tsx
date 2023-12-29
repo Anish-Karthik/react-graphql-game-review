@@ -1,5 +1,7 @@
 import { cn } from '@/lib/utils'
 import { Link, useLocation } from 'react-router-dom'
+import { SignOutButton, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react"
+import { Button } from './ui/button'
 
 const routes = [
   {
@@ -7,8 +9,8 @@ const routes = [
     path: '/dashboard'
   },
   {
-    name: 'My Games',
-    path: '/my-games'
+    name: 'My Reviews',
+    path: '/my-reviews'
   },
   {
     name: 'Add Game',
@@ -34,15 +36,22 @@ const NavBar = () => {
               to={route.path}
               className={cn(
                 'px-4 py-2 rounded-md text-gray-800 font-medium',
-                currentRoute.pathname === route.path ? 'bg-gray-200': 'hover:text-yellow-500'
+                currentRoute.pathname === route.path ? 'bg-gray-200 text-yellow-700': 'hover:text-yellow-500'
               )}
             >
               {route.name}
             </Link>
           ))}
         </div>
-        <div className=''>
-
+        <div className='flex gap-2 items-center'>
+          <SignedOut>
+            <Button variant={'outline'} className='text-yellow-500 border-yellow-500 hover:text-yellow-700 hover:border-yellow-700 '>
+              <SignInButton afterSignInUrl='/onboarding' />
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl='/' />
+          </SignedIn>
         </div>
       </div>
     </nav>
