@@ -15,8 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { CREATE_GAME } from "@/lib/grapql/mutations"
-import { useMutation } from "@apollo/client"
+import { useAddGameMutation } from "@/lib/graphql/generated/types-and-hooks"
 import { useNavigate } from "react-router-dom"
 // "PC", "Xbox", "Playstation", "Nintendo", "Android", "IOS"
 const platforms = [
@@ -75,7 +74,7 @@ const formSchema = z.object({
 
 const AddGame = () => {
   const navigate = useNavigate();
-  const [addGame, { loading, error }] = useMutation(CREATE_GAME);
+  const [addGame, { loading, error }] = useAddGameMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

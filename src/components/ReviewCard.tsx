@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon, StarIcon } from 'lucide-react';
+import { EditIcon, StarIcon, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from './ui/button';
 
@@ -23,9 +23,9 @@ const ReviewCard = ({
           <img src={authorImage} alt={authorName} className='w-10 h-10 rounded-full' />
           <h1 className='text-xl font-bold'>{authorName}</h1>
         </div>
-        <div className='flex '>
+        <div className='flex gap-2 items-center'>
           <EditIcon />
-          <DeleteIcon />
+          <Trash2 />
         </div>
       </div>
       <div className='flex flex-col gap-2'>

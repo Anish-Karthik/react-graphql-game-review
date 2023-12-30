@@ -15,9 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { CREATE_USER } from '@/lib/grapql/mutations'
-import { GET_USER } from '@/lib/grapql/queries'
-import { useMutation, useQuery } from '@apollo/client'
+import { useCreateAuthorMutation, useGetAuthorQuery } from '@/lib/graphql/generated/types-and-hooks'
 import { useAuth, useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -36,9 +34,9 @@ const Onboarding = () => {
   const navigate = useNavigate();  
 
   console.log(userId)
-  const [createAuthor, { loading, error }] = useMutation(CREATE_USER);
-  const { data: authorData, loading: authorQueryLoading, error: authorQueryError } = useQuery(GET_USER, {
-    variables: { authorId: userId } ,
+  const [createAuthor, { loading, error }] = useCreateAuthorMutation();
+  const { data: authorData, loading: authorQueryLoading } = useGetAuthorQuery({
+    variables: { authorId: userId! } ,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,12 +62,13 @@ const Onboarding = () => {
   if (authorData?.author) {
     navigate('/dashboard')
   }
-  if (user && !user.isSignedIn) {
+  if (!userId || user && !user.isSignedIn) {
     console.log('no user', user, userId)
     navigate('/')
+    return <></>
   }
   if (loading || authorQueryLoading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error?.message || authorQueryError?.message}</p>;
+  if (error) return <p>Error : {error?.message}</p>;
 
   console.log(form.getValues())
   // 2. Define a submit handler.
@@ -80,7 +79,7 @@ const Onboarding = () => {
       author: {
         image: values.image,
         name: values.name,
-        userId: userId,
+        userId: userId!,
         verified: false,
       }
     }})

@@ -1,9 +1,9 @@
 import AddReview from '@/components/AddReview'
 import GameCard from '@/components/GameCard'
 import ReviewCard from '@/components/ReviewCard'
-import { CREATE_REVIEW } from '@/lib/grapql/mutations'
-import { GET_GAME, GET_USER } from '@/lib/grapql/queries'
-import { useMutation, useQuery } from '@apollo/client'
+import { GetGameReviewsQuery, GetGameReviewsQueryVariables, useCreateReviewMutation, useGetAuthorQuery } from '@/lib/graphql/generated/types-and-hooks'
+import { GET_GAME_WITH_REVIEWS } from '@/lib/graphql/operations/queries'
+import { useQuery } from '@apollo/client'
 import { useAuth } from '@clerk/clerk-react'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -13,21 +13,28 @@ const Game = () => {
   const { userId } = useAuth();
   const params = useParams()
   const navigate = useNavigate()
-  const { data: authorData, loading: authorQueryLoading } = useQuery(GET_USER, {
-    variables: { authorId: userId } ,
+  const { data: authorData, loading: authorQueryLoading } = useGetAuthorQuery({
+    variables: { authorId: userId! } ,
   });
-  const gameId = params.gameId
-  const { data, loading, error,  } = useQuery(GET_GAME, {
+  const gameId = params.gameId!
+  const { data, loading, error,  } = useQuery<GetGameReviewsQuery, GetGameReviewsQueryVariables>(GET_GAME_WITH_REVIEWS,{
     variables: { gameId }
   })
-  const [addReview] = useMutation(CREATE_REVIEW, {
+  const [addReview] = useCreateReviewMutation({
     refetchQueries: [
-      GET_GAME,
+      GET_GAME_WITH_REVIEWS,
     ],
   })
   if (!userId) {
     // navigate('/')
     setTimeout(() => navigate(`/games/${gameId}`), 3000)
+  }
+  if (!authorData) {
+    navigate('/onboarding')
+    return <></>
+  }
+  if (!data || !data.game || !data.game.reviews) {
+    return <p>Game not found</p>
   }
   console.log(authorData)
   if (loading || authorQueryLoading) return <p>Loading...</p>;
@@ -42,8 +49,8 @@ const Game = () => {
         price={data.game.price}
         platform={data.game.platform}
         company={data.game.company}
-        review={data.game.reviews.reduce((acc: number, review: any) => acc + review.rating, 0) / data.game.reviews.length}
-        totalReviews={data.game.reviews.length}
+        review={(data.game.reviews?.reduce((acc: number, review: any) => acc + review.rating, 0) || 0) / (data.game.reviews?.length || 1)}
+        totalReviews={data.game!.reviews?.length}
         view='horizontal'
       />
       <div className='flex flex-col gap-4'>

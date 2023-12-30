@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_GAMES = gql`
-  query GetGames {
+  query getGames {
     games {
       id
       name
@@ -22,7 +22,7 @@ export const GET_USER = gql`
   }
 `;
 
-export const GET_MyReviews = gql`
+export const GET_MYREVIEWS = gql`
   query myReviews($authorId: ID!){
     author(id: $authorId) {
       reviews {
@@ -43,8 +43,8 @@ export const GET_MyReviews = gql`
   }
 `
 
-export const GET_GAME = gql`
-  query GameReviewsQuery($gameId: ID!) {
+export const GET_GAME_WITH_REVIEWS = gql`
+  query getGameReviews($gameId: ID!) {
     game(id: $gameId) {
       id
       name

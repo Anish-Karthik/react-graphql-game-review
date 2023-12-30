@@ -1,3 +1,4 @@
+import { Platform } from '@/lib/graphql/generated/types-and-hooks'
 import { cn } from '@/lib/utils'
 import { ActivityIcon } from 'lucide-react'
 
@@ -16,7 +17,7 @@ const GameCard = ({
   description: string,
   image: string,
   price: number,
-  platform: string,
+  platform: Platform[],
   company: string,
   view?: "vertical" | "horizontal"
   review?: number

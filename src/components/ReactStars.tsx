@@ -134,7 +134,7 @@ class ReactStars extends Component {
 
   moreThanHalf(event, size) {
     const { target } = event
-    const mouseAt = event.clientX - target.getBoundingClientRect().left
+    let mouseAt = event.clientX - target.getBoundingClientRect().left
     mouseAt = Math.round(Math.abs(mouseAt))
     return mouseAt > size / 2
   }
