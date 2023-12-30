@@ -2,6 +2,7 @@ import { StarIcon, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import UpdateReview from './UpdateReview';
 import { Button } from './ui/button';
+import DeleteReview from './DeleteReview';
 
 const limit = 300;
 
@@ -30,7 +31,7 @@ const ReviewCard = ({
         </div>
         {isEditable && <div className='flex gap-2 items-center'>
           <UpdateReview content={content} rating={rating} reviewId={reviewId} />
-          <Trash2 />
+          <DeleteReview reviewId={reviewId} />
         </div>}
       </div>
       <div className='flex flex-col gap-2'>
