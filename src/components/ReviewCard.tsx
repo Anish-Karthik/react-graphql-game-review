@@ -1,8 +1,8 @@
-import { StarIcon, Trash2 } from 'lucide-react';
+import { StarIcon } from 'lucide-react';
 import { useState } from 'react';
+import DeleteReview from './DeleteReview';
 import UpdateReview from './UpdateReview';
 import { Button } from './ui/button';
-import DeleteReview from './DeleteReview';
 
 const limit = 300;
 
