@@ -23,8 +23,10 @@ export const GET_USER = gql`
 `;
 
 export const GET_MYREVIEWS = gql`
-  query myReviews($authorId: ID!){
+  query getMyReviews($authorId: ID!){
     author(id: $authorId) {
+      name
+      image
       reviews {
         id
         game {

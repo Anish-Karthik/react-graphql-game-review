@@ -220,12 +220,12 @@ export type GetAuthorQueryVariables = Exact<{
 
 export type GetAuthorQuery = { __typename?: 'Query', author: { __typename?: 'Author', id: string } };
 
-export type MyReviewsQueryVariables = Exact<{
+export type GetMyReviewsQueryVariables = Exact<{
   authorId: Scalars['ID']['input'];
 }>;
 
 
-export type MyReviewsQuery = { __typename?: 'Query', author: { __typename?: 'Author', reviews?: Array<{ __typename?: 'Review', id: string, rating: number, content: string, game: { __typename?: 'Game', id: string, name: string, image: string, company: string, description: string, price: number, platform: Array<Platform> } }> | null } };
+export type GetMyReviewsQuery = { __typename?: 'Query', author: { __typename?: 'Author', name: string, image: string, reviews?: Array<{ __typename?: 'Review', id: string, rating: number, content: string, game: { __typename?: 'Game', id: string, name: string, image: string, company: string, description: string, price: number, platform: Array<Platform> } }> | null } };
 
 export type GetGameReviewsQueryVariables = Exact<{
   gameId: Scalars['ID']['input'];
@@ -431,9 +431,11 @@ export type GetAuthorQueryHookResult = ReturnType<typeof useGetAuthorQuery>;
 export type GetAuthorLazyQueryHookResult = ReturnType<typeof useGetAuthorLazyQuery>;
 export type GetAuthorSuspenseQueryHookResult = ReturnType<typeof useGetAuthorSuspenseQuery>;
 export type GetAuthorQueryResult = Apollo.QueryResult<GetAuthorQuery, GetAuthorQueryVariables>;
-export const MyReviewsDocument = gql`
-    query myReviews($authorId: ID!) {
+export const GetMyReviewsDocument = gql`
+    query getMyReviews($authorId: ID!) {
   author(id: $authorId) {
+    name
+    image
     reviews {
       id
       game {
@@ -453,37 +455,37 @@ export const MyReviewsDocument = gql`
     `;
 
 /**
- * __useMyReviewsQuery__
+ * __useGetMyReviewsQuery__
  *
- * To run a query within a React component, call `useMyReviewsQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetMyReviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMyReviewsQuery({
+ * const { data, loading, error } = useGetMyReviewsQuery({
  *   variables: {
  *      authorId: // value for 'authorId'
  *   },
  * });
  */
-export function useMyReviewsQuery(baseOptions: Apollo.QueryHookOptions<MyReviewsQuery, MyReviewsQueryVariables>) {
+export function useGetMyReviewsQuery(baseOptions: Apollo.QueryHookOptions<GetMyReviewsQuery, GetMyReviewsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyReviewsQuery, MyReviewsQueryVariables>(MyReviewsDocument, options);
+        return Apollo.useQuery<GetMyReviewsQuery, GetMyReviewsQueryVariables>(GetMyReviewsDocument, options);
       }
-export function useMyReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyReviewsQuery, MyReviewsQueryVariables>) {
+export function useGetMyReviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyReviewsQuery, GetMyReviewsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyReviewsQuery, MyReviewsQueryVariables>(MyReviewsDocument, options);
+          return Apollo.useLazyQuery<GetMyReviewsQuery, GetMyReviewsQueryVariables>(GetMyReviewsDocument, options);
         }
-export function useMyReviewsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyReviewsQuery, MyReviewsQueryVariables>) {
+export function useGetMyReviewsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMyReviewsQuery, GetMyReviewsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<MyReviewsQuery, MyReviewsQueryVariables>(MyReviewsDocument, options);
+          return Apollo.useSuspenseQuery<GetMyReviewsQuery, GetMyReviewsQueryVariables>(GetMyReviewsDocument, options);
         }
-export type MyReviewsQueryHookResult = ReturnType<typeof useMyReviewsQuery>;
-export type MyReviewsLazyQueryHookResult = ReturnType<typeof useMyReviewsLazyQuery>;
-export type MyReviewsSuspenseQueryHookResult = ReturnType<typeof useMyReviewsSuspenseQuery>;
-export type MyReviewsQueryResult = Apollo.QueryResult<MyReviewsQuery, MyReviewsQueryVariables>;
+export type GetMyReviewsQueryHookResult = ReturnType<typeof useGetMyReviewsQuery>;
+export type GetMyReviewsLazyQueryHookResult = ReturnType<typeof useGetMyReviewsLazyQuery>;
+export type GetMyReviewsSuspenseQueryHookResult = ReturnType<typeof useGetMyReviewsSuspenseQuery>;
+export type GetMyReviewsQueryResult = Apollo.QueryResult<GetMyReviewsQuery, GetMyReviewsQueryVariables>;
 export const GetGameReviewsDocument = gql`
     query getGameReviews($gameId: ID!) {
   game(id: $gameId) {
