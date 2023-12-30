@@ -23,7 +23,8 @@ import {
 } from "@/components/ui/form"
 
 import Stars from "@/components/ReactStars"
-import { CreateReviewMutationFn } from "@/lib/graphql/generated/types-and-hooks"
+import { useUpdateReviewMutation } from "@/lib/graphql/generated/types-and-hooks"
+import { Edit2Icon } from "lucide-react"
 import { Textarea } from './ui/textarea'
 
 const formSchema = z.object({
@@ -38,36 +39,41 @@ const formSchema = z.object({
   }),
 })
 
-const AddReview = ({
-  gameId,
-  authorId,
-  addReview,
+const UpdateReview = ({
+  reviewId,
+  content,
+  rating,
 }: {
-  gameId: string
-  authorId: string
-  addReview: CreateReviewMutationFn
+  reviewId: string
+  content: string
+  rating: number
 }) => {  
-  
+  const [updateReview] = useUpdateReviewMutation({
+    refetchQueries: [
+      'getMyReviews'
+    ],
+  })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      rating: 5,
+      rating,
+      content,
     },
   })
- 
+  const { isValid } = form.formState
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await addReview({
+      await updateReview({
         variables: {
+          updateReviewId: reviewId,
           review: {
-            authorId: authorId,
             content: values.content,
-            gameId: gameId,
             rating: values.rating,
           }
         }
       })
+      console.log('Updated review successfully!')
       form.reset()
     } catch (error) {
       console.log(error)
@@ -78,11 +84,13 @@ const AddReview = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Review</Button>
+        <Button variant={"ghost"}>
+          <Edit2Icon />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add Review</DialogTitle>
+          <DialogTitle>Edit Review</DialogTitle>
           <DialogDescription>
             Anyone will be able to view this.
           </DialogDescription>
@@ -128,15 +136,14 @@ const AddReview = ({
               )}
             />
             <DialogClose asChild>
-              <Button type="submit" disabled={!authorId || !gameId}>Submit</Button>
+              <Button type="submit" disabled={!isValid}>Edit</Button>
             </DialogClose>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-    
   )
 }
 
 
-export default AddReview
+export default UpdateReview

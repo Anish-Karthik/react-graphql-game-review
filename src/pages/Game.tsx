@@ -66,10 +66,11 @@ const Game = () => {
           {data.game.reviews.map((review: any) => (
             <ReviewCard
               key={review.id}
+              reviewId={review.id}
               authorName={review.author.name}
               authorImage={review.author.image}
               rating={review.rating}
-              comment={review.content}
+              content={review.content}
             />
           ))}
         </div>

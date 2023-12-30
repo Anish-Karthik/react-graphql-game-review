@@ -35,3 +35,21 @@ export const CREATE_REVIEW = gql`
     }
   }
 `
+
+export const UPDATE_REVIEW = gql`
+  mutation updateReview($updateReviewId: ID!, $review: UpdateReviewInput!){
+  updateReview(id: $updateReviewId, review: $review) {
+    id
+    rating
+    content
+  }
+}
+`
+
+export const DELETE_REVIEW = gql`
+  mutation deleteReview($reviewId: ID!){
+    deleteReview(id: $reviewId) {
+      id
+    }
+  }
+`

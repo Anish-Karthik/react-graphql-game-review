@@ -1,19 +1,24 @@
-import { EditIcon, StarIcon, Trash2 } from 'lucide-react';
+import { StarIcon, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import UpdateReview from './UpdateReview';
 import { Button } from './ui/button';
 
 const limit = 300;
 
 const ReviewCard = ({
+  reviewId,
   authorName,
   authorImage,
   rating,
-  comment,
+  content,
+  isEditable = false,
 }: {
+  reviewId: string
   authorName: string
   authorImage: string
   rating: number
-  comment: string
+  content: string
+  isEditable?: boolean
 }) => {
   const [show, setShow] = useState(false)
   return (
@@ -23,10 +28,10 @@ const ReviewCard = ({
           <img src={authorImage} alt={authorName} className='w-10 h-10 rounded-full' />
           <h1 className='text-xl font-bold'>{authorName}</h1>
         </div>
-        <div className='flex gap-2 items-center'>
-          <EditIcon />
+        {isEditable && <div className='flex gap-2 items-center'>
+          <UpdateReview content={content} rating={rating} reviewId={reviewId} />
           <Trash2 />
-        </div>
+        </div>}
       </div>
       <div className='flex flex-col gap-2'>
         <div className='flex justify-between'>
@@ -40,11 +45,11 @@ const ReviewCard = ({
           </div>
         </div>
         <div className='px-2'>
-          {comment.length > limit && !show && 
-            <p className='text-lg'>{comment.slice(0, limit)}...{<Button variant={"ghost"} className='!p-0 hover:bg-transparent -mt-3' onClick={() => setShow(true)}>Read more </Button>}</p>
+          {content.length > limit && !show && 
+            <p className='text-lg'>{content.slice(0, limit)}...{<Button variant={"ghost"} className='!p-0 hover:bg-transparent -mt-3' onClick={() => setShow(true)}>Read more </Button>}</p>
           }
-          {(comment.length <= limit || show) &&
-            <p className='text-lg'>{comment}</p>
+          {(content.length <= limit || show) &&
+            <p className='text-lg'>{content}</p>
           }
         </div>
       </div>

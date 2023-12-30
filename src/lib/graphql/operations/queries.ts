@@ -66,3 +66,13 @@ export const GET_GAME_WITH_REVIEWS = gql`
     }
   }
 `
+
+export const GET_REVIEW = gql`
+  query getReview($reviewId: ID!) {
+    review(id: $reviewId) {
+      id
+      rating
+      content
+    }
+  }
+`
